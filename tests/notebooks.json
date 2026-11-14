@@ -1,0 +1,40 @@
+{
+  "_comment": "Per-notebook settings for run_notebooks.py. timeout: seconds per cell (default 180). long: true runs only in the nightly job or with --long. ci: false never runs in CI (interactive window).",
+  "optimal_control/cartpole_rollout_gradients.ipynb": {
+    "timeout": 300
+  },
+  "optimal_control/racecar_toward_mpc.ipynb": {
+    "long": true
+  },
+  "dynamic_programming/pendulum_value_iteration.ipynb": {
+    "long": true
+  },
+  "dynamic_programming/pendulum_value_iteration_vs_lqr.ipynb": {
+    "long": true
+  },
+  "dynamic_programming/pendulum_cost_to_go_approximation.ipynb": {
+    "long": true
+  },
+  "optimal_control/cartpole_lqr.ipynb": {
+    "timeout": 600
+  },
+  "dynamic_programming/double_integrator_minimum_time.ipynb": {
+    "timeout": 300
+  },
+  "dynamic_programming/double_integrator_policy_evaluation.ipynb": {
+    "timeout": 300
+  },
+  "reinforcement_learning/pendulum_value_iteration_vs_lqr_vs_ppo_sb3.ipynb": {
+    "long": true
+  },
+  "reinforcement_learning/drone_ppo_sb3.ipynb": {
+    "long": true
+  },
+  "reinforcement_learning/gymnasium_interface.ipynb": {
+    "long": true
+  },
+  "reinforcement_learning/particle_gymnasium_sb3.ipynb": {
+    "long": true,
+    "ci": false
+  }
+}

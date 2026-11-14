@@ -1,0 +1,46 @@
+# Run the notebooks, one job per course.
+# On a push or a pull request: each course's notebooks, the long ones left out.
+# Every night, and on demand: every notebook, the long ones included, since minilink's dev
+# branch moves under them.
+name: notebooks
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  schedule:
+    - cron: "0 7 * * *"
+  workflow_dispatch:
+
+jobs:
+  course:
+    if: github.event_name == 'push' || github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    strategy:
+      fail-fast: false
+      matrix:
+        course: [gro860, gro501]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: sudo apt-get update && sudo apt-get install -y graphviz
+      - run: pip install -r requirements.txt
+      - run: python tests/run_notebooks.py --course ${{ matrix.course }} --jobs 2
+
+  everything:
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: sudo apt-get update && sudo apt-get install -y graphviz
+      - run: pip install -r requirements.txt
+      - run: python tests/run_notebooks.py --long --jobs 2
