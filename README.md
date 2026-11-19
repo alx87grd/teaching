@@ -5,6 +5,11 @@ Course notebooks for control, optimal control and reinforcement learning, built 
 
 > **minilink version:** the notebooks follow minilink's `dev` branch (`requirements.txt` and each
 > notebook's install cell), so they can break while the library changes.
+>
+> **Branches:** a branch here is the twin of the minilink branch of the same name and installs
+> it. `main` installs minilink `dev`; `dev-consolidation` installs minilink `dev-consolidation`.
+> When a minilink branch merges into `dev`, its twin merges into `main` with its install lines
+> set back to `dev`.
 
 ## Folders
 
