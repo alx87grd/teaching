@@ -1,6 +1,6 @@
 # Everything the notebooks import, for a local run and for CI.
 # minilink follows its dev branch until 0.4.0; then this line becomes minilink[full]==0.4.0.
-minilink[full] @ git+https://github.com/alx87grd/minilink@dev
+minilink[full] @ git+https://github.com/alx87grd/minilink@dev-consolidation
 control
 stable-baselines3
 gymnasium
