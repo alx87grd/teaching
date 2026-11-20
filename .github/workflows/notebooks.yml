@@ -1,18 +1,29 @@
 # Run the notebooks, one job per course.
-# On a push or a pull request: each course's notebooks, the long ones left out.
-# Every night, and on demand: every notebook, the long ones included, since minilink's dev
-# branch moves under them.
+# On a push or a pull request: every notebook's minilink pin checked against requirements.txt,
+# then each course's notebooks, the long ones left out.
+# Every night, and on demand: every notebook, the long ones included, since the libraries move
+# under a pinned minilink (and minilink dev under the dev branch).
 name: notebooks
 
 on:
   push:
-    branches: [main]
+    branches: [main, dev]
   pull_request:
   schedule:
     - cron: "0 7 * * *"
   workflow_dispatch:
 
 jobs:
+  pins:
+    if: github.event_name == 'push' || github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python tests/set_minilink.py --check
+
   course:
     if: github.event_name == 'push' || github.event_name == 'pull_request'
     runs-on: ubuntu-latest

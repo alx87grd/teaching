@@ -1,5 +1,5 @@
 # Everything the notebooks import, for a local run and for CI.
-# minilink follows its dev branch until 0.4.0; then this line becomes minilink[full]==0.4.0.
+# minilink: the pin this branch installs, set by tests/set_minilink.py (README, "Branches and pins").
 minilink[full] @ git+https://github.com/alx87grd/minilink@dev-consolidation
 control
 stable-baselines3

@@ -3,13 +3,43 @@
 Course notebooks for control, optimal control and reinforcement learning, built on
 [minilink](https://github.com/alx87grd/minilink). Each notebook opens in Colab from its badge.
 
-> **minilink version:** the notebooks follow minilink's `dev` branch (`requirements.txt` and each
-> notebook's install cell), so they can break while the library changes.
+> **minilink version:** each branch installs one minilink, written in `requirements.txt` and in
+> every notebook's Colab cell (see [Branches and pins](#branches-and-pins)).
 >
-> **Branches:** a branch here is the twin of the minilink branch of the same name and installs
-> it. `main` installs minilink `dev`; `dev-consolidation` installs minilink `dev-consolidation`.
-> When a minilink branch merges into `dev`, its twin merges into `main` with its install lines
-> set back to `dev`.
+> **Not yet the course's home:** until the end of the fall term the course notes link to the
+> notebooks in minilink (`examples/teaching/`). Until then `main` here is not pinned and follows
+> minilink's development branches; at the move it is pinned to a minilink release, a `dev` branch
+> takes over the development, and the course links move here.
+
+## Branches and pins
+
+The three roles are the same in minilink, here and in the maintainer's workbench:
+
+| Branch | Role | Installs | Must work |
+| --- | --- | --- | --- |
+| `main` | stable; **the public links** (course notes, PDFs, web pages) | a minilink release from PyPI (`minilink[full]==0.4.0`) | always |
+| `dev` | beta | minilink `dev` | yes, fixed as soon as minilink `dev` changes |
+| `dev-<name>` (`dev-consolidation`, a feature) | alpha | the minilink branch of the same name | may break |
+
+Work flows `dev-<name>` → `dev` → `main`. A twin branch merges into `dev` with its minilink
+twin; `dev` reaches `main` when minilink publishes a release, between terms. The pin is set in
+one place:
+
+```bash
+python tests/set_minilink.py 0.4.0      # main: a release
+python tests/set_minilink.py dev        # dev, or a twin branch by its name, or a commit
+python tests/set_minilink.py --check    # CI: every notebook pins what requirements.txt pins
+```
+
+**A fix during a term** goes to `main`, whose links never change:
+
+- a mistake in a notebook: branch from `main`, fix, CI runs the course, merge into `main`, then
+  merge `main` into `dev`;
+- a bug in minilink: a workaround in the notebook at once when possible; the fix in minilink
+  as a patch release (`0.4.1`, fixes only, never an API change), then on a branch from `main`
+  `python tests/set_minilink.py 0.4.1`, CI runs every notebook, merge into `main`.
+
+The next Colab session installs the fix; an open one needs a runtime restart.
 
 ## Folders
 
@@ -50,7 +80,8 @@ folder carries the topic: do not repeat it in the name.
 
 `tests/run_notebooks.py` runs the notebooks and fails on any cell error; per-notebook
 timeouts and the long ones are in `tests/notebooks.json`. CI (`.github/workflows/notebooks.yml`)
-runs one job per course on every push and pull request, and every notebook each night.
+runs one job per course on every push and pull request, checks that every notebook pins what
+`requirements.txt` pins, and runs every notebook each night.
 
 ```bash
 pip install -r requirements.txt
