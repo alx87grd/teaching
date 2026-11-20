@@ -83,6 +83,9 @@ timeouts and the long ones are in `tests/notebooks.json`. CI (`.github/workflows
 runs one job per course on every push and pull request, checks that every notebook pins what
 `requirements.txt` pins, and runs every notebook each night.
 
+A notebook or script run outside Jupyter, by hand or by an agent, sets `MINILINK_HEADLESS=1`
+so no figure, diagram or window opens on the screen.
+
 ```bash
 pip install -r requirements.txt
 python tests/run_notebooks.py --course gro860

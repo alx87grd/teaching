@@ -46,8 +46,15 @@ jobs:
     if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     timeout-minutes: 120
+    strategy:
+      fail-fast: false
+      matrix:
+        # A scheduled run checks out the default branch only: dev, on minilink dev, is named
+        branch: [main, dev]
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ matrix.branch }}
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
